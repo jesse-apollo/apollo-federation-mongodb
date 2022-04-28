@@ -1,0 +1,17 @@
+" An aiport. "
+type Airport @key(fields: "id") @key(fields: "code") {
+    " The primary key for this record. "
+    id: ID!
+    " The three letter airport code. "
+    code: String!
+    " Description of this airport. "
+    description: String
+}
+
+type Query {
+    " Get all of the airports in the database. "
+    getAirports(filter: String, sort: String): [Airport!]
+    " Get airport by code. "
+    getAirport(code: String): Airport
+}
+

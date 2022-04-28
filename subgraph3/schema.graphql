@@ -1,0 +1,6 @@
+
+type Carrier @key(fields: "id")  @key(fields: "code") {
+    id: ID!
+    code: String!
+    description: String
+}

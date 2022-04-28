@@ -1,0 +1,110 @@
+
+directive @mongo(map: String) on FIELD_DEFINITION
+
+directive @lookup(dict: String) on FIELD_DEFINITION
+
+" A registration of an aircraft in the FAA database. "
+type Registration @key(fields: "id") @key(fields: "n_number") {
+    " PK for this entity. "
+    id: ID!
+    " This 'N' number or tail number of this aircraft registration. "
+    n_number: String @mongo(map:"N-NUMBER")
+    " The manufacturer's serial number. "
+    serial_number: String
+
+    " The name of the registrant. "
+    registrant: String  @mongo(map:"NAME")
+    " The type of registrant. " 
+    registrant_type: String @lookup(dict: "TYPE REGISTRANT")
+    
+    " The aircraft details. "
+    aircraft: Aircraft
+    " The FAA DB aircraft code. "
+    aircraft_code: Int @mongo(map:"MFR MDL CODE")
+
+    " Country of registration. "
+    country: String
+
+    " The year this craft was made. "
+    year_made: Int @mongo(map:"YEAR MFR")
+
+    " The engine details. "
+    engine: Engine
+    " The FAA DB engine code. "
+    engine_code: Int @mongo(map:"ENG MFR MDL")
+
+    " Air worthiness date. "
+    air_worthiness_date: String @mongo(map:"AIR WORTH DATE")
+}
+
+" An aircraft in the FAA database. "
+type Aircraft @key(fields: "id") @key(fields: "code") {
+    " PK for this entity. "
+    id: ID!
+    " The FAA aircraft code. "
+    code: String
+    " The name of the manufacturer. "
+    manufacturer: String @mongo(map:"MFR")
+    " The model name for this aircraft. "
+    model: String
+
+    " The type of engine."
+    engine_type: String @lookup(dict: "TYPE-ENG")
+    " The type of aircraft. "
+    aircraft_type: String @lookup(dict: "TYPE-ACFT")
+
+    "Maximum number of seats in the aircraft."
+    seat_count: Int @mongo(map:"NO-SEATS")
+    "Number of engines on the aircraft"
+    engine_count: Int @mongo(map:"NO-ENG")
+    """Aircraft maximum gross take off weight in pounds.
+        1 - Up to 12,499
+        2 - 12,500 - 19,999
+        3 - 20,000 and over. 4 – UAV up to 55
+    """
+    weight_class: String @mongo(map:"AC-WEIGHT")
+    "Aircraft average cruising speed in miles per hour."
+    cruising_speed: Int @mongo(map:"SPEED")
+}
+
+" An engine used on an aircraft. "
+type Engine @key(fields: "id") @key(fields: "code") {
+    " PK for this entity. "
+    id: ID!
+    " The FAA code for this engine. "
+    code: Int
+    " The model name. "
+    model: String
+    " The manufacturer of this engine. "
+    manufacturer: String  @mongo(map:"MFR")
+    " The engine type. "
+    type: String @lookup(dict:"TYPE")
+    " Engine horsepower (if known). "
+    horsepower: Int
+    " Engine thurst (if known). "
+    thurst: Int
+}
+
+type Query {
+    " Get a list of all engines registered in the FAA database, optionally filter by manufacturer. "
+    getEngines(manufacturer: String): [Engine]
+    " Get engine by FAA code. "
+    getEngineByCode(code: String): Engine
+    " Get engine by internal ID. "
+    getEngineByID(id: ID): Engine
+    getEngineMakerList: [String]
+
+    " Get a list of all aircraft registered in the FAA database, optionally filter by manufacturer. "
+    getAircraft(manufacturer: String): [Aircraft]
+    " Get aircraft by FAA code. "
+    getAircraftByCode(code: String): Aircraft
+     " Get aircraft by internal ID. "
+    getAircraftByID(id: ID): Aircraft
+
+    " Get FAA registrations by registrant name. "
+    getRegistrationByName(registrant: String): [Registration]
+    " Get FAA registration by tail number ('N' number). "
+    getRegistrationByN(number: String): Registration
+    " Get FAA registration by internal ID. "
+    getRegistrationByID(number: String): Registration
+}

@@ -1,0 +1,88 @@
+directive @mongo(map: String) on FIELD_DEFINITION
+
+directive @lookup(dict: String) on FIELD_DEFINITION
+
+" On time metrics. "
+type DelayMetric @key(fields: "id")   {
+
+    id: ID!
+    " The delay for this flight. " 
+    delay: Int  @mongo(map:"DEP_DELAY")
+    " The origin of this flight. "
+    origin: Airport
+    " The destination of this flight. "
+    destination: Airport
+    " The registration details. "
+    tail_number: Registration
+    " The carrier details. "
+    carrier: Carrier
+}
+
+" On time metrics. "
+type RollupDelayMetric   {
+
+    id: ID!
+    " Average delay for this group of data. "
+    average_delay: Float
+    " The maximum delay for this group of data. "
+    max_delay: Int
+    " The minimum delay for this group of data. "
+    min_delay: Int
+    " The standard deviation for the delay in this group of data. "
+    std_dev: Float
+    " The number of records that contributed to this metric. "
+    record_count: Int
+
+    " The carrier if this rollup is by carrier."
+    carrier: Carrier
+    " The aircraft if this rollup is by aircraft registration."
+    aircraft: Registration
+    " The airport if this rollup is by airport."
+    airport: Airport
+
+}
+
+extend type Airport @key(fields: "code")  {
+    code: String @external
+    " The average delay time at this airport. "
+    average_delay: Float
+    " The recent delays for this airport. "
+    recent_delays: [DelayMetric]
+}
+
+extend type Registration @key(fields: "n_number")  {
+    n_number: String @external
+    " The average delay time for this aircraft. "
+    average_delay: Float
+    " The recent delays for this aircraft. "
+    recent_delays: [DelayMetric]
+}
+
+type Carrier @key(fields: "code")  {
+    code: String!
+    " The average delay time for this carrier. "
+    average_delay: Float
+    " The recent delays for this carrier. "
+    recent_delays: [DelayMetric]
+}
+
+type Query  {
+    " Get delays by airport. "
+    getDelaysByAirport(airport: String): [DelayMetric]
+    " Get delays by carrier. "
+    getDelaysByCarrier(carrier: String): [DelayMetric] 
+    " Get delays by aircraft. "
+    getDelaysByAircraft(tail_number: String): [DelayMetric] 
+
+    " Get delay statistics by airport. "
+    getRollupByAirport(limit: Int = 10): [RollupDelayMetric]
+    " Get delay statistics by carrier. "
+    getRollupByCarrier(limit: Int = 10): [RollupDelayMetric]
+    " Get delay statistics by aircraft. " 
+    getRollupByAircraft(limit: Int = 10): [RollupDelayMetric] 
+}
+
+
+
+
+

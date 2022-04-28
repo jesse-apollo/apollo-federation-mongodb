@@ -1,0 +1,21 @@
+{
+    "name": "gateway",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "type": "module",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "node server.js"
+    },
+    "keywords": [],
+    "author": "Awesome SE",
+    "license": "MIT",
+    "dependencies": {
+        "@apollo/gateway": "latest",
+        "apollo-server": "latest",
+        "dotenv": "^8.2.0",
+        "graphql": "latest"
+    }
+  }
+  
