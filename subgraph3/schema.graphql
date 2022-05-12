@@ -12,7 +12,7 @@ type Order @key(fields:"id") {
 
     expedite_indicator: Int
     has_blanket_order: Boolean
-    is_aog: Boowlean
+    is_aog: Boolean
     metadata: [Metadata]
     mpn_ordered: String
     new_part_indicator: Boolean
@@ -45,8 +45,8 @@ type Order @key(fields:"id") {
     receiving_comments: String
 }
 
-type Airport @key(fields:"code") {
-    code: String
+extend type Airport @key(fields: "code") {
+    code: String! @external
 }
 
 type Metadata {
@@ -64,4 +64,8 @@ type CommentType {
 type Comment {
     line: Int
     text: String
+}
+
+type Query {
+    getOrders: [Order]
 }

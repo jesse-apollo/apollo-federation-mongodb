@@ -43,7 +43,7 @@ type RollupDelayMetric   {
 }
 
 extend type Airport @key(fields: "code")  {
-    code: String @external
+    code: String! @external
     " The average delay time at this airport. "
     average_delay: Float
     " The recent delays for this airport. "
@@ -58,8 +58,8 @@ extend type Registration @key(fields: "n_number")  {
     recent_delays: [DelayMetric]
 }
 
-type Carrier @key(fields: "code")  {
-    code: String!
+extend type Carrier @key(fields: "code")  {
+    code: String! @external
     " The average delay time for this carrier. "
     average_delay: Float
     " The recent delays for this carrier. "

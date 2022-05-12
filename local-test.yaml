@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+  gateway:
+    image: gateway
+    environment:
+      - APOLLO_KEY
+      - APOLLO_GRAPH_REF
+    ports:
+      - "8000:3200"
+
+  subgraph1:
+    depends_on:
+      - gateway
+    image: subgraph1
+
+  subgraph2:
+    depends_on:
+      - gateway
+    image: subgraph2
+
+  subgraph3:
+    depends_on:
+      - gateway
+    image: subgraph3
+
+  subgraph4:
+    depends_on:
+      - gateway
+    image: subgraph4
