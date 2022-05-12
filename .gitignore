@@ -1,0 +1,8 @@
+*/node_modules
+*/package-lock.json
+.vscode
+*/.env
+gateway/supergraph.graphql
+cloudbuild.yaml
+.config
+__pycache__

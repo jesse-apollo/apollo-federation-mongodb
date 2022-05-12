@@ -1,6 +1,67 @@
 
-type Carrier @key(fields: "id")  @key(fields: "code") {
+type Order @key(fields:"id") {
     id: ID!
-    code: String!
+
+    order_number: Int
+    aircraft_nuber: Int
+    average_cost: String
+    averageLeadTime: Int
+    buyer_code: String
+    
+    comments: [CommentType]
+
+    expedite_indicator: Int
+    has_blanket_order: Boolean
+    is_aog: Boowlean
+    metadata: [Metadata]
+    mpn_ordered: String
+    new_part_indicator: Boolean
+
+    order_date: String
+    order_quantity: Int
+    planner: String
+    receipts: Int
+    received_date: String
+    received_quantity: Int
+    required_date: String
+    
+    station_code: String
+    station: Airport
+
+    supplier_number: Int
+    supplier_sequence: Int
+
+    is_spec_2000_s1_booked: Boolean
+    minmumOrderAmount: Int
+    queue_bypass_indicator: String
+    reopen_quantity: Int
+    requistion_number: Int
+    scheduled_ship_quantity: Int
+    ship_to_station: String
+    under_receipt_qty: Int
+    exception_quantity: Int
+    mpn_received: String
+    receipt_date: String
+    receiving_comments: String
+}
+
+type Airport @key(fields:"code") {
+    code: String
+}
+
+type Metadata {
+    id: ID!
+    modify_time: String
+    user: String
+}
+
+type CommentType {
+    type: Int
     description: String
+    comments: [Comment]
+} 
+
+type Comment {
+    line: Int
+    text: String
 }

@@ -8,6 +8,12 @@ type Airport @key(fields: "id") @key(fields: "code") {
     description: String
 }
 
+type Carrier @key(fields: "id")  @key(fields: "code") {
+    id: ID!
+    code: String!
+    description: String
+}
+
 type Query {
     " Get all of the airports in the database. "
     getAirports(filter: String, sort: String): [Airport!]
