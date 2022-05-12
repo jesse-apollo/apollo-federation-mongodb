@@ -18,6 +18,7 @@ run-local-unmanaged: supergraph
 	docker build -f subgraph1/Dockerfile subgraph1 -t subgraph1
 	docker build -f subgraph2/Dockerfile subgraph2 -t subgraph2
 	docker build -f subgraph3/Dockerfile subgraph3 -t subgraph3
+	docker build -f subgraph3/Dockerfile subgraph3 -t subgraph4
 	docker-compose -f local-test-unmanaged.yaml up 
 
 run-local-managed:
@@ -25,6 +26,7 @@ run-local-managed:
 	docker build -f subgraph1/Dockerfile subgraph1 -t subgraph1
 	docker build -f subgraph2/Dockerfile subgraph2 -t subgraph2
 	docker build -f subgraph3/Dockerfile subgraph3 -t subgraph3
+	docker build -f subgraph3/Dockerfile subgraph3 -t subgraph4
 	docker-compose --env-file ./gateway/.env -f local-test.yaml up 
 
 deploy:
