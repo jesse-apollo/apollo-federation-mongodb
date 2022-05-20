@@ -10,21 +10,22 @@ services:
       - "8000:3200"
 
   subgraph1:
+    environment:
+      - MONGODB_CONN
     depends_on:
       - gateway
     image: subgraph1
 
   subgraph2:
+    environment:
+      - MONGODB_CONN
     depends_on:
       - gateway
     image: subgraph2
 
   subgraph3:
+    environment:
+      - MONGODB_CONN
     depends_on:
       - gateway
     image: subgraph3
-
-  subgraph4:
-    depends_on:
-      - gateway
-    image: subgraph4

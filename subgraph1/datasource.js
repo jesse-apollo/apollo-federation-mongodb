@@ -31,14 +31,11 @@ class AirportAPI extends DataSource {
         return newObj;
     }
   
-  
     async getAirport(code, info) {
-
         const query = { Code: code };
         const airport = await this.airports.findOne(query);
-        return airport ? this.reMap(airport) : false;
+        return airport ? this.reMap(airport) : null;
     }
-  
   
     async getAirports(filter, sorting, info) {
         const query = {  };

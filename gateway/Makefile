@@ -17,4 +17,5 @@ run-docker-unmanaged:
 	docker run gateway-unmanaged
 
 run-local:
-	nodemon -e js --exec 'PORT=9000 node server.js'
+	cd .. && make supergraph-localhost
+	nodemon -e js --exec 'PORT=9000 node server-unmanaged.js'

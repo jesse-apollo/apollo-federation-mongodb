@@ -6,8 +6,7 @@ joins across multiple clusters.
 
  * subgraph1 - Airport and Air Carrier data cluster
  * subgraph2 - Airport Delay data cluster
- * subgraph3 - Airline logistics data cluster
- * subgraph4 - Aircraft manufacturer, engine, and registration (tail number) data cluster
+ * subgraph3 - Aircraft manufacturer, engine, and registration (tail number) data cluster
 
 ## Run it Locally with Unmanaged Federation (Local Composition)
 
@@ -16,7 +15,7 @@ joins across multiple clusters.
 ## Run it Locally with Managed Federation
 
  1. Publish your schemas to Apollo
-    1. Edit the `ROUTING_URL` in each of the subgraph directories `.env` file:  ./subgraph[1-4] __OR__ run `make setup` again to set them (recommended).
+    1. Edit the `ROUTING_URL` in each of the subgraph directories `.env` file:  ./subgraph[1-3] __OR__ run `make setup` again to set them (recommended).
     2. Publish your graph with `make publish`
  2. Deploy locally: `make run-local-managed`
 
@@ -27,13 +26,13 @@ joins across multiple clusters.
  1. Install the Google Cloud CLI: https://cloud.google.com/sdk/docs/quickstart
  2. Login to the Google Cloud Console and create a new project
  3. Authenticate with Google Cloud: `gcloud init` (if you ever need to change your default Project ID (this might be different from the project name so always use the ID) use the command `gcloud config set project <project-ID>`)
- 4. In the folder ./gateway & ./subgraph[1-4] folders edit the `cloudbuild.yaml` file to use your correct project ID (replace the <CHANGE_ME> in each of those) __OR__ use the setup tool by typing `make setup` (recommended)
+ 4. In the folder ./gateway & ./subgraph[1-3] folders edit the `cloudbuild.yaml` file to use your correct project ID (replace the <CHANGE_ME> in each of those) __OR__ use the setup tool by typing `make setup` (recommended)
 
 ### How to deploy
 
  1. Deploy your gateway and subgraphs with `make deploy`
  2. Check the Google Cloud Run Console to see the URLs for each of your services and your gateway.
- 3. Update the `.env` files in ./subgraph[1-4] to have the right `ROUTING_URL` that you got from Cloud Run dashboard __OR__ use the setup tool by typing `make setup`
+ 3. Update the `.env` files in ./subgraph[1-3] to have the right `ROUTING_URL` that you got from Cloud Run dashboard __OR__ use the setup tool by typing `make setup`
  4. Run `make publish` (this will run `make publish` in each of your subgraph directories, you can also run those one by one)
  5. Update studio with the right URL for your gateway.
 

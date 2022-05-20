@@ -1,7 +1,8 @@
 include .env
 
 deploy:
-	gcloud builds submit
+	echo "Running Google Cloud Build"
+	@gcloud builds submit --substitutions=_MONGODB_CONN=${MONGODB_CONN}
 
 publish:
 	rover subgraph publish ${APOLLO_GRAPH_REF} --schema ./schema.graphql \

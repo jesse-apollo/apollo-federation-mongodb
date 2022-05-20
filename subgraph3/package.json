@@ -4,18 +4,18 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node server.js"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
     },
     "keywords": [],
     "author": "Awesome SE",
     "license": "MIT",
     "dependencies": {
-      "@apollo/federation": "^0.29.0",
-      "apollo-server": "^3.5.0",
-      "dotenv": "^8.2.0",
-      "graphql": "^15.4.0",
-      "mongodb":"^4.5.0"
+        "@apollo/federation": "^0.29.0",
+        "apollo-server": "^3.5.0",
+        "dotenv": "^8.2.0",
+        "graphql": "^15.4.0",
+        "mongodb": "^4.5.0",
+        "nodemon": "^2.0.15"
     }
-  }
-  
+}

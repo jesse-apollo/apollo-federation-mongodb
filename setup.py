@@ -10,12 +10,11 @@ DATA_DICT = {
     'GOOGLE_PROJECT': '',
     'SUBGRAPH1_SUBGRAPH_NAME':'airports',
     'SUBGRAPH2_SUBGRAPH_NAME':'airport-delay',
-    'SUBGRAPH3_SUBGRAPH_NAME':'logistics',
     'SUBGRAPH3_SUBGRAPH_NAME':'registration',
     'SUBGRAPH1_ROUTING_URL': '',
     'SUBGRAPH2_ROUTING_URL': '',
     'SUBGRAPH3_ROUTING_URL': '',
-
+    'MONGODB_CONN': ''
 }
 
 DOT_RE = re.compile('(.+)=(.*)' )
@@ -68,7 +67,7 @@ if __name__ == "__main__":
     print("---------------------------")
     print("Press Control-C to exit.\n")
 
-    if not exists("gateway/.env") or not exists("gateway/cloudbuild.yaml"):
+    if not exists("gateway/.env") or not exists("gateway/cloudbuild.yaml.tmpl"):
         print("ERROR: dependencies are missing, run 'make install-deps'.")
         sys.exit(1)
 
@@ -87,18 +86,17 @@ if __name__ == "__main__":
     DATA_DICT['VARIANT_NAME'] = ask_input("Enter the Graph Variant to publish to", DATA_DICT.get('VARIANT_NAME', ''))
     DATA_DICT['GOOGLE_PROJECT'] = ask_input("Enter your Google Cloud Project ID", DATA_DICT.get('GOOGLE_PROJECT', ''))
     DATA_DICT['APOLLO_GRAPH_REF'] = "%s@%s" % (DATA_DICT['GRAPH_ID'], DATA_DICT['VARIANT_NAME'])
+    DATA_DICT['MONGODB_CONN'] = ask_input("Enter your MongoDB connection string", DATA_DICT.get('MONGODB_CONN', ''))
 
     print("\nSubgraph Names\nIf you customize your demo, you can change these.  Or keep the defaults.\n")
     DATA_DICT['SUBGRAPH1_SUBGRAPH_NAME'] = ask_input("Subgraph 1 Name", DATA_DICT.get('SUBGRAPH1_SUBGRAPH_NAME', ''))
     DATA_DICT['SUBGRAPH2_SUBGRAPH_NAME'] = ask_input("Subgraph 2 Name", DATA_DICT.get('SUBGRAPH2_SUBGRAPH_NAME', ''))
     DATA_DICT['SUBGRAPH3_SUBGRAPH_NAME'] = ask_input("Subgraph 3 Name", DATA_DICT.get('SUBGRAPH3_SUBGRAPH_NAME', ''))
-    DATA_DICT['SUBGRAPH4_SUBGRAPH_NAME'] = ask_input("Subgraph 4 Name", DATA_DICT.get('SUBGRAPH4_SUBGRAPH_NAME', ''))
 
     print("\nSubgraph URLs\nYou will not have these until you do a deploy.  Just press enter to skip.\n")
     DATA_DICT['SUBGRAPH1_ROUTING_URL'] = ask_input("Subgraph 1 URL", DATA_DICT.get('SUBGRAPH1_ROUTING_URL', ''))
     DATA_DICT['SUBGRAPH2_ROUTING_URL'] = ask_input("Subgraph 2 URL", DATA_DICT.get('SUBGRAPH2_ROUTING_URL', ''))
     DATA_DICT['SUBGRAPH3_ROUTING_URL'] = ask_input("Subgraph 3 URL", DATA_DICT.get('SUBGRAPH3_ROUTING_URL', ''))
-    DATA_DICT['SUBGRAPH4_ROUTING_URL'] = ask_input("Subgraph 4 URL", DATA_DICT.get('SUBGRAPH4_ROUTING_URL', ''))
 
     #print(DATA_DICT)
 
@@ -108,7 +106,6 @@ if __name__ == "__main__":
     replace_dot('subgraph1/.env')
     replace_dot('subgraph2/.env')
     replace_dot('subgraph3/.env')
-    replace_dot('subgraph4/.env')
     replace_dot('gateway/.env')
     replace_dot('client/.env')
 
@@ -116,4 +113,3 @@ if __name__ == "__main__":
     replace_google_yaml('subgraph1/cloudbuild.yaml')
     replace_google_yaml('subgraph2/cloudbuild.yaml')
     replace_google_yaml('subgraph3/cloudbuild.yaml')
-    replace_google_yaml('subgraph4/cloudbuild.yaml')

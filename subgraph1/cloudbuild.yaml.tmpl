@@ -8,6 +8,7 @@ steps:
 # Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'subgraph1', '--image', 'gcr.io/<CHANGE_ME>/subgraph1','--allow-unauthenticated', '--region', 'us-east1']
+  args: ['run', 'deploy', 'subgraph1', '--image', 'gcr.io/<CHANGE_ME>/subgraph1','--allow-unauthenticated', '--region', 
+    'us-east1', '--update-env-vars', 'MONGODB_CONN=${_MONGODB_CONN}']
 images:
 - gcr.io/<CHANGE_ME>/subgraph1

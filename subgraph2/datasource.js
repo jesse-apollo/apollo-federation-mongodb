@@ -201,8 +201,6 @@ class OnTimeAPI extends DataSource {
 
         const cursor = this.ontime.aggregate(pipeline);
 
-        //console.log(await cursor.explain())
-
         var results = await cursor.toArray();
         results = results.map(x => x._id);
 
@@ -233,11 +231,8 @@ class OnTimeAPI extends DataSource {
                 }
             }
         ];
-        //console.log(pipeline);
 
         const cursor = this.ontime.aggregate(pipeline);
-
-        //console.log(await cursor.explain())
 
         var results = await cursor.toArray();
 
