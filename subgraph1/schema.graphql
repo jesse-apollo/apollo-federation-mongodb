@@ -1,4 +1,4 @@
-" An aiport. "
+" An airport. "
 type Airport @key(fields: "id") @key(fields: "code") {
     " The primary key for this record. "
     id: ID!
@@ -8,9 +8,12 @@ type Airport @key(fields: "id") @key(fields: "code") {
     description: String
 }
 
+" An air carrier. "
 type Carrier @key(fields: "id")  @key(fields: "code") {
+    " The primary key for this record. "
     id: ID!
     code: String!
+    " Description of this air carrier. "
     description: String
 }
 
